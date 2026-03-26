@@ -1,0 +1,148 @@
+{
+  "name": "copypastegenius",
+  "displayName": "CopyPasteGenius",
+  "description": "Run AI skills from VS Code \u2014 fill variables, assemble prompts, copy or insert results",
+  "version": "0.1.0",
+  "publisher": "copypastegenius",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Machine Learning"
+  ],
+  "icon": "images/icon.png",
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:cpgSkillsView",
+    "onCommand:cpg.login",
+    "onCommand:cpg.runSkill",
+    "onCommand:cpg.runSkillOnSelection"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "cpg.login",
+        "title": "CPG: Login",
+        "category": "CopyPasteGenius"
+      },
+      {
+        "command": "cpg.logout",
+        "title": "CPG: Logout",
+        "category": "CopyPasteGenius"
+      },
+      {
+        "command": "cpg.runSkill",
+        "title": "CPG: Run Skill",
+        "category": "CopyPasteGenius"
+      },
+      {
+        "command": "cpg.runSkillOnSelection",
+        "title": "CPG: Run Skill on Selection",
+        "category": "CopyPasteGenius"
+      },
+      {
+        "command": "cpg.refreshSkills",
+        "title": "CPG: Refresh Skills",
+        "category": "CopyPasteGenius",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "cpg.runSkillOnSelection",
+          "when": "editorHasSelection",
+          "group": "cpg@1"
+        },
+        {
+          "command": "cpg.runSkill",
+          "group": "cpg@2"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "cpg.refreshSkills",
+          "when": "view == cpgSkillsView",
+          "group": "navigation"
+        }
+      ]
+    },
+    "views": {
+      "cpg-sidebar": [
+        {
+          "id": "cpgSkillsView",
+          "name": "Skills",
+          "when": "true"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "CopyPasteGenius",
+      "properties": {
+        "cpg.apiUrl": {
+          "type": "string",
+          "default": "https://www.copypastegenius.com",
+          "description": "CopyPasteGenius API URL"
+        },
+        "cpg.insertMode": {
+          "type": "string",
+          "enum": [
+            "clipboard",
+            "insert",
+            "panel"
+          ],
+          "default": "clipboard",
+          "description": "Where to put the assembled prompt: copy to clipboard, insert at cursor, or open in a panel"
+        },
+        "cpg.autoDetectLanguage": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically fill {{language}} variable from the active file's language"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "cpg.runSkill",
+        "key": "ctrl+shift+p",
+        "mac": "cmd+shift+p",
+        "when": "false"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "cpg-sidebar",
+          "title": "CopyPasteGenius",
+          "icon": "images/icon-activitybar.svg"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "npx @vscode/vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "node-fetch": "2.7.0"
+  },
+  "keywords": [
+    "ai",
+    "prompts",
+    "skills",
+    "claude",
+    "chatgpt"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/infinitecoder2/cpg-vscode"
+  }
+}

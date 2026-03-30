@@ -1,5 +1,5 @@
 {
-  "name": "copypastegenius",
+  "name": "copypastegenius-vscode",
   "displayName": "CopyPasteGenius",
   "description": "Run AI skills from VS Code \u2014 fill variables, assemble prompts, copy or insert results",
   "version": "0.1.0",
